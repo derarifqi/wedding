@@ -98,20 +98,8 @@ function setupCoverAndAudio() {
     // 2. Buka kunci scroll halaman
     document.body.classList.remove('locked');
 
-    // 3. Putar musik latar
-    if (audio) {
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          updateMusicUI(true);
-        }).catch((err) => {
-          console.warn('Autoplay terblokir kebijakan browser, menunggu sentuhan pertama:', err);
-          updateMusicUI(false);
-          // Fallback: putar musik pada sentuhan/interaksi layar pertama kali
-          enableAudioOnFirstGesture(audio);
-        });
-      }
-    }
+    // 3. Putar musik latar otomatis
+    playWeddingMusic();
 
     // 4. Mulai Auto-Scroll setelah transisi cover selesai (jeda 1.2 detik)
     setTimeout(() => {
@@ -119,9 +107,58 @@ function setupCoverAndAudio() {
     }, 1200);
   }
 
-  // A. Tombol Buka Undangan diklik manual
+  // Fungsi pemutar musik dengan penanganan pembatasan browser
+  function playWeddingMusic() {
+    if (!audio) return;
+    audio.muted = false;
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        updateMusicUI(true);
+      }).catch((err) => {
+        console.warn('Autoplay dicegah oleh peramban sebelum interaksi pengguna:', err);
+        updateMusicUI(false);
+        // Aktifkan musik seketika pada sentuhan/scroll/klik pertama tamu
+        attachFirstGestureAudioUnlock();
+      });
+    }
+  }
+
+  // Listener agresif: begitu tamu menyentuh layar, scroll, atau tap di mana saja, musik LANGSUNG berputar
+  function attachFirstGestureAudioUnlock() {
+    const gestureEvents = ['touchstart', 'touchend', 'click', 'pointerdown', 'scroll', 'wheel', 'keydown'];
+
+    const unlockHandler = () => {
+      if (audio && audio.paused) {
+        audio.play().then(() => {
+          updateMusicUI(true);
+        }).catch(() => {});
+      }
+      // Lepas semua listener setelah musik berhasil di-trigger
+      gestureEvents.forEach((evt) => {
+        window.removeEventListener(evt, unlockHandler);
+        document.removeEventListener(evt, unlockHandler);
+      });
+    };
+
+    gestureEvents.forEach((evt) => {
+      window.addEventListener(evt, unlockHandler, { passive: true, once: true });
+      document.addEventListener(evt, unlockHandler, { passive: true, once: true });
+    });
+  }
+
+  // A. Tombol Buka Undangan diklik manual (Gesture resmi yang 100% diizinkan browser)
   if (btnOpenInvite) {
-    btnOpenInvite.addEventListener('click', () => {
+    btnOpenInvite.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openInvitation();
+    });
+  }
+
+  // A2. Klik di mana saja pada area cover juga membuka dan langsung memutar musik
+  if (coverOverlay) {
+    coverOverlay.addEventListener('click', () => {
       openInvitation();
     });
   }
@@ -143,7 +180,8 @@ function setupCoverAndAudio() {
 
   // C. Floating Button Toggle Musik Manual
   if (floatingMusicBtn && audio) {
-    floatingMusicBtn.addEventListener('click', () => {
+    floatingMusicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (audio.paused) {
         audio.play().then(() => {
           updateMusicUI(true);
@@ -166,19 +204,6 @@ function setupCoverAndAudio() {
       floatingMusicBtn.classList.remove('playing');
       floatingMusicBtn.setAttribute('title', 'Putar Musik');
     }
-  }
-
-  // Listener untuk autoplay musik pada gesture pertama jika browser membatasi auto-play awal
-  function enableAudioOnFirstGesture(targetAudio) {
-    const playOnce = () => {
-      targetAudio.play().then(() => {
-        updateMusicUI(true);
-      }).catch(() => {});
-      window.removeEventListener('touchstart', playOnce);
-      window.removeEventListener('click', playOnce);
-    };
-    window.addEventListener('touchstart', playOnce, { passive: true });
-    window.addEventListener('click', playOnce, { passive: true });
   }
 }
 
