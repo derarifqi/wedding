@@ -68,20 +68,26 @@ function setupCoverAndAudio() {
   const coverOverlay = document.getElementById('coverOverlay');
   const btnOpenInvite = document.getElementById('btnOpenInvite');
   const audio = document.getElementById('bg-audio');
-  const floatingMusicBtn = document.getElementById('floatingMusicBtn');
+  const btnOpenText = document.getElementById('btnOpenText');
 
   let isCoverOpened = false;
-  let autoOpenTimer = null;
+  let countdownTimer = null;
+  let secondsRemaining = 5;
+
+  // Update teks awal countdown
+  if (btnOpenText) {
+    btnOpenText.textContent = `Buka Undangan ${secondsRemaining}`;
+  }
 
   // Fungsi inti untuk membuka undangan
   function openInvitation() {
     if (isCoverOpened) return;
     isCoverOpened = true;
 
-    // Bersihkan timer auto-open jika belum jalan
-    if (autoOpenTimer) {
-      clearTimeout(autoOpenTimer);
-      autoOpenTimer = null;
+    // Hentikan interval countdown
+    if (countdownTimer) {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
     }
 
     // 1. Geser cover ke atas secara mulus (translateY(-100%))
@@ -120,10 +126,20 @@ function setupCoverAndAudio() {
     });
   }
 
-  // B. Auto-Open Otomatis setelah 4 Detik (Waktu ideal agar tamu sempat membaca namanya di cover)
-  autoOpenTimer = setTimeout(() => {
-    openInvitation();
-  }, 4000);
+  // B. Countdown 5 detik: Buka Undangan 5 -> 4 -> 3 -> 2 -> 1 -> Buka Otomatis
+  countdownTimer = setInterval(() => {
+    secondsRemaining--;
+
+    if (secondsRemaining > 0) {
+      if (btnOpenText) {
+        btnOpenText.textContent = `Buka Undangan ${secondsRemaining}`;
+      }
+    } else {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
+      openInvitation();
+    }
+  }, 1000);
 
   // C. Floating Button Toggle Musik Manual
   if (floatingMusicBtn && audio) {
