@@ -2,6 +2,12 @@
  * ==========================================================================
  * THE WEDDING OF DERA & RIFQI
  * Main JavaScript Interactivity (script.js)
+ * Features:
+ * 1. URL Query Guest Name Reader (?to=...)
+ * 2. Auto-Open Cover (4s timer) with manual click override & sound autoplay
+ * 3. Smooth Auto-Scroll with Pause on Screen Touch/Hold & Resume on Release
+ * 4. Countdown Timer to Big Day
+ * 5. One-Click DANA Copy to Clipboard
  * ==========================================================================
  */
 
@@ -9,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Membaca Parameter URL Nama Tamu (?to=...)
   setupGuestName();
 
-  // 2. Kontrol Cover Lock Overlay & Background Audio
+  // 2. Kontrol Cover Lock Overlay, Auto-Open (4 detik), & Background Audio
   setupCoverAndAudio();
 
   // 3. Countdown Timer Real-time Menuju Hari-H
@@ -30,7 +36,6 @@ function setupGuestName() {
 
   if (guestDisplay) {
     if (rawGuest && rawGuest.trim() !== '') {
-      // Decode URL, ganti tanda plus dengan spasi, sanitasi XSS
       const cleanGuest = sanitizeHtml(decodeURIComponent(rawGuest.replace(/\+/g, ' ').trim()));
       guestDisplay.textContent = cleanGuest;
     } else {
@@ -49,7 +54,15 @@ function sanitizeHtml(str) {
 }
 
 /**
- * Kontrol Cover Lock Modal dan Pemutaran Background Music
+ * Variabel Global untuk Kontrol Auto-Scroll
+ */
+let isAutoScrollEnabled = true;
+let isUserInteracting = false;
+let autoScrollRafId = null;
+let resumeScrollTimeout = null;
+
+/**
+ * Kontrol Cover Lock Modal, Auto-Open Timer (4 Detik), & Background Audio
  */
 function setupCoverAndAudio() {
   const coverOverlay = document.getElementById('coverOverlay');
@@ -57,28 +70,62 @@ function setupCoverAndAudio() {
   const audio = document.getElementById('bg-audio');
   const floatingMusicBtn = document.getElementById('floatingMusicBtn');
 
-  // Klik tombol "Buka Undangan"
-  if (btnOpenInvite && coverOverlay) {
-    btnOpenInvite.addEventListener('click', () => {
-      // 1. Geser cover ke atas secara mulus (translateY(-100%))
+  let isCoverOpened = false;
+  let autoOpenTimer = null;
+
+  // Fungsi inti untuk membuka undangan
+  function openInvitation() {
+    if (isCoverOpened) return;
+    isCoverOpened = true;
+
+    // Bersihkan timer auto-open jika belum jalan
+    if (autoOpenTimer) {
+      clearTimeout(autoOpenTimer);
+      autoOpenTimer = null;
+    }
+
+    // 1. Geser cover ke atas secara mulus (translateY(-100%))
+    if (coverOverlay) {
       coverOverlay.classList.add('hide');
+    }
 
-      // 2. Buka kunci scroll halaman
-      document.body.classList.remove('locked');
+    // 2. Buka kunci scroll halaman
+    document.body.classList.remove('locked');
 
-      // 3. Putar audio otomatis (User gesture autoplay)
-      if (audio) {
-        audio.play().then(() => {
+    // 3. Putar musik latar
+    if (audio) {
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
           updateMusicUI(true);
         }).catch((err) => {
-          console.warn('Autoplay dicegah oleh browser:', err);
+          console.warn('Autoplay terblokir kebijakan browser, menunggu sentuhan pertama:', err);
           updateMusicUI(false);
+          // Fallback: putar musik pada sentuhan/interaksi layar pertama kali
+          enableAudioOnFirstGesture(audio);
         });
       }
+    }
+
+    // 4. Mulai Auto-Scroll setelah transisi cover selesai (jeda 1.2 detik)
+    setTimeout(() => {
+      startSmartAutoScroll();
+    }, 1200);
+  }
+
+  // A. Tombol Buka Undangan diklik manual
+  if (btnOpenInvite) {
+    btnOpenInvite.addEventListener('click', () => {
+      openInvitation();
     });
   }
 
-  // Floating Button Toggle Musik
+  // B. Auto-Open Otomatis setelah 4 Detik (Waktu ideal agar tamu sempat membaca namanya di cover)
+  autoOpenTimer = setTimeout(() => {
+    openInvitation();
+  }, 4000);
+
+  // C. Floating Button Toggle Musik Manual
   if (floatingMusicBtn && audio) {
     floatingMusicBtn.addEventListener('click', () => {
       if (audio.paused) {
@@ -104,6 +151,110 @@ function setupCoverAndAudio() {
       floatingMusicBtn.setAttribute('title', 'Putar Musik');
     }
   }
+
+  // Listener untuk autoplay musik pada gesture pertama jika browser membatasi auto-play awal
+  function enableAudioOnFirstGesture(targetAudio) {
+    const playOnce = () => {
+      targetAudio.play().then(() => {
+        updateMusicUI(true);
+      }).catch(() => {});
+      window.removeEventListener('touchstart', playOnce);
+      window.removeEventListener('click', playOnce);
+    };
+    window.addEventListener('touchstart', playOnce, { passive: true });
+    window.addEventListener('click', playOnce, { passive: true });
+  }
+}
+
+/**
+ * ==========================================================================
+ * SMART AUTO-SCROLL CONTROLLER
+ * - Berjalan santai ke bawah secara otomatis
+ * - Pengguna bisa scroll manual kapan saja
+ * - Berhenti seketika saat layar DITAHAN (touch/press/wheel)
+ * - Berjalan kembali saat layar DILEPAS
+ * - Berhenti permanen saat sudah mentok paling bawah
+ * ==========================================================================
+ */
+function startSmartAutoScroll() {
+  const scrollSpeed = 0.85; // Kecepatan pixel per frame (sangat santai dan nyaman dibaca)
+  let lastTimestamp = null;
+
+  function step(timestamp) {
+    if (!isAutoScrollEnabled) return;
+
+    if (!lastTimestamp) lastTimestamp = timestamp;
+    const delta = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+
+    // Jika pengguna sedang menahan layar / scroll manual, jangan jalankan auto-scroll
+    if (!isUserInteracting) {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const currentScroll = window.scrollY || window.pageYOffset;
+
+      if (currentScroll < maxScroll - 2) {
+        // Geser ke bawah
+        window.scrollBy({
+          top: scrollSpeed,
+          left: 0,
+          behavior: 'auto'
+        });
+      } else {
+        // Sudah mentok paling bawah, hentikan auto-scroll
+        isAutoScrollEnabled = false;
+        return;
+      }
+    }
+
+    autoScrollRafId = requestAnimationFrame(step);
+  }
+
+  autoScrollRafId = requestAnimationFrame(step);
+
+  // Inisialisasi Detektor Interaksi Pengguna (Sentuh / Tahan / Lepas)
+  initUserInteractionListeners();
+}
+
+/**
+ * Detektor sentuhan layar (Touch & Mouse events)
+ */
+function initUserInteractionListeners() {
+  // 1. Saat Layar DITAHAN / Disentuh (Touchstart / Mousedown)
+  const onInteractionStart = () => {
+    isUserInteracting = true;
+    if (resumeScrollTimeout) {
+      clearTimeout(resumeScrollTimeout);
+      resumeScrollTimeout = null;
+    }
+  };
+
+  // 2. Saat Layar DILEPAS (Touchend / Mouseup)
+  const onInteractionEnd = () => {
+    if (resumeScrollTimeout) clearTimeout(resumeScrollTimeout);
+    // Beri jeda wajar 900ms setelah layar dilepas sebelum auto-scroll berjalan kembali
+    resumeScrollTimeout = setTimeout(() => {
+      isUserInteracting = false;
+    }, 900);
+  };
+
+  // 3. Saat Pengguna melakukan Scroll Manual (Mouse wheel / Touch move)
+  const onManualScroll = () => {
+    isUserInteracting = true;
+    if (resumeScrollTimeout) clearTimeout(resumeScrollTimeout);
+    resumeScrollTimeout = setTimeout(() => {
+      isUserInteracting = false;
+    }, 900);
+  };
+
+  // Event Listeners untuk Mobile Touchscreen
+  window.addEventListener('touchstart', onInteractionStart, { passive: true });
+  window.addEventListener('touchend', onInteractionEnd, { passive: true });
+  window.addEventListener('touchcancel', onInteractionEnd, { passive: true });
+
+  // Event Listeners untuk Desktop Mouse / Pointer
+  window.addEventListener('mousedown', onInteractionStart, { passive: true });
+  window.addEventListener('mouseup', onInteractionEnd, { passive: true });
+  window.addEventListener('wheel', onManualScroll, { passive: true });
 }
 
 /**
@@ -116,7 +267,6 @@ function setupCountdownTimer() {
   const timerMinutes = document.getElementById('timerMinutes');
   const timerSeconds = document.getElementById('timerSeconds');
 
-  // Waktu target: 07 Oktober 2026 08:00:00 WIB (+07:00)
   const targetDate = new Date('2026-10-07T08:00:00+07:00').getTime();
 
   function updateTimer() {
@@ -163,7 +313,6 @@ function copyDanaNumber(text, btnId, defaultText) {
 
     showToast(`Nomor DANA (${text}) berhasil disalin!`);
 
-    // Reset teks tombol setelah 2 detik
     setTimeout(() => {
       if (btn) {
         btn.classList.remove('copied');
@@ -182,7 +331,7 @@ function copyDanaNumber(text, btnId, defaultText) {
 }
 
 /**
- * Fallback salin teks untuk peramban yang membatasi clipboard API
+ * Fallback salin teks jika clipboard API dibatasi
  */
 function fallbackCopy(text, callback) {
   const textArea = document.createElement('textarea');
@@ -220,7 +369,7 @@ function showToast(message) {
 }
 
 /**
- * Animasi Scroll Reveal saat elemen masuk ke dalam viewport
+ * Animasi Scroll Reveal saat elemen masuk viewport
  */
 function setupScrollReveal() {
   const items = document.querySelectorAll('.reveal-item');
@@ -240,7 +389,6 @@ function setupScrollReveal() {
 
     items.forEach((item) => observer.observe(item));
   } else {
-    // Fallback jika browser lawas
     items.forEach((item) => item.classList.add('active'));
   }
 }
