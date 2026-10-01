@@ -72,7 +72,8 @@ function setupCoverAndAudio() {
 
   let isCoverOpened = false;
   let countdownTimer = null;
-  let secondsRemaining = 5;
+  let secondsRemaining = 10;
+  const musicHintPill = document.getElementById('musicHintPill');
 
   // Update teks awal countdown
   if (btnOpenText) {
@@ -110,7 +111,6 @@ function setupCoverAndAudio() {
   // 0. Pre-arm audio pada interaksi mikro pertama pengguna di cover
   const earlyArmAudio = () => {
     if (audio && audio.paused) {
-      // Pemicu gesture awal yang diakui browser
       audio.load();
     }
     ['touchstart', 'pointerdown', 'mousedown', 'keydown'].forEach(evt => {
@@ -135,13 +135,18 @@ function setupCoverAndAudio() {
       }).catch((err) => {
         console.warn('Browser membatasi autoplay tanpa sentuhan fisik awal:', err);
         
-        // 2. Putar secara muted agar audio pipeline aktif berjalan
+        // 2. Tampilkan notifikasi sentuh layar jika audio terhambat
+        if (musicHintPill) {
+          musicHintPill.style.display = 'flex';
+        }
+
+        // 3. Putar secara muted di latar belakang agar media stream siap
         audio.muted = true;
         audio.play().then(() => {
           updateMusicUI(false);
         }).catch(() => {});
 
-        // 3. Un-mute seketika pada sentuhan/scroll/tap pertama tamu
+        // 4. Un-mute seketika pada sentuhan/scroll/tap pertama tamu
         attachFirstGestureAudioUnlock();
       });
     }
@@ -154,13 +159,12 @@ function setupCoverAndAudio() {
     const unlockHandler = () => {
       if (audio) {
         audio.muted = false;
-        if (audio.paused) {
-          audio.play().then(() => {
-            updateMusicUI(true);
-          }).catch(() => {});
-        } else {
+        audio.play().then(() => {
           updateMusicUI(true);
-        }
+        }).catch(() => {});
+      }
+      if (musicHintPill) {
+        musicHintPill.style.display = 'none';
       }
       // Lepas semua listener setelah musik berhasil aktif
       gestureEvents.forEach((evt) => {
@@ -172,6 +176,17 @@ function setupCoverAndAudio() {
     gestureEvents.forEach((evt) => {
       window.addEventListener(evt, unlockHandler, { passive: true, once: true });
       document.addEventListener(evt, unlockHandler, { passive: true, once: true });
+    });
+  }
+
+  // Klik pada hint pill juga langsung menyalakan audio
+  if (musicHintPill) {
+    musicHintPill.addEventListener('click', () => {
+      if (audio) {
+        audio.muted = false;
+        audio.play().then(() => updateMusicUI(true)).catch(() => {});
+      }
+      musicHintPill.style.display = 'none';
     });
   }
 
@@ -190,7 +205,7 @@ function setupCoverAndAudio() {
     });
   }
 
-  // B. Countdown 5 detik: Buka Undangan 5 -> 4 -> 3 -> 2 -> 1 -> Buka Otomatis
+  // B. Countdown 10 detik: Buka Undangan 10 -> 9 -> 8 ... -> 1 -> Buka Otomatis
   countdownTimer = setInterval(() => {
     secondsRemaining--;
 
@@ -210,6 +225,7 @@ function setupCoverAndAudio() {
     floatingMusicBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (audio.paused) {
+        audio.muted = false;
         audio.play().then(() => {
           updateMusicUI(true);
         }).catch((err) => {
@@ -223,6 +239,9 @@ function setupCoverAndAudio() {
   }
 
   function updateMusicUI(isPlaying) {
+    if (musicHintPill && isPlaying) {
+      musicHintPill.style.display = 'none';
+    }
     if (!floatingMusicBtn) return;
     if (isPlaying) {
       floatingMusicBtn.classList.add('playing');
