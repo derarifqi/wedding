@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generator &amp; WhatsApp Blaster Undangan | Dera &amp; Rifqi</title>
+  <meta name="description" content="Dashboard Generator Link Undangan dan WhatsApp Sender Dera & Rifqi.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body: #F7F5F0;
+      --bg-card: #FFFFFF;
+      --gold-primary: #C5A059;
+      --gold-dark: #9E7A36;
+      --gold-light: #F9F3EA;
+      --gold-border: rgba(197, 160, 89, 0.35);
+      --text-main: #332F2B;
+      --text-muted: #746D65;
+      --wa-green: #25D366;
+      --wa-green-dark: #128C7E;
+      --danger: #E53935;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow: 0 8px 30px rgba(110, 95, 75, 0.08);
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-title: 'Cinzel', serif;
+      --font-script: 'Great Vibes', cursive;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      padding: 24px 16px 60px 16px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .app-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--gold-border);
+    }
+
+    .app-title-script {
+      font-family: var(--font-script);
+      font-size: 2.8rem;
+      color: var(--gold-dark);
+      line-height: 1.1;
+    }
+
+    .app-title {
+      font-family: var(--font-title);
+      font-size: 1.25rem;
+      letter-spacing: 2px;
+      color: var(--text-main);
+      margin-top: 4px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .app-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .nav-links {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gold-dark);
+      text-decoration: none;
+      padding: 6px 14px;
+      background: #FFFFFF;
+      border: 1px solid var(--gold-border);
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-nav:hover {
+      background: var(--gold-primary);
+      color: #FFFFFF;
+      border-color: var(--gold-primary);
+    }
+
+    /* Grid Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 860px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .card-full {
+        grid-column: span 2;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      position: relative;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+    }
+
+    .card-title {
+      font-family: var(--font-title);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title-badge {
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--gold-border);
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .form-hint {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #D6CDC1;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--text-main);
+      background: #FAFAFA;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.2);
+      background: #FFFFFF;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 160px;
+    }
+
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .tag-chip {
+      background: #EFE9DE;
+      color: var(--gold-dark);
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tag-chip:hover {
+      background: var(--gold-primary);
+      color: #FFFFFF;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #DFBF82 0%, #C5A059 100%);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(197, 160, 89, 0.35);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 18px rgba(197, 160, 89, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #EFE9DE;
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: #E2DACB;
+    }
+
+    .btn-danger {
+      background: #FFEBEE;
+      color: var(--danger);
+    }
+
+    .btn-danger:hover {
+      background: #FFCDD2;
+    }
+
+    .btn-wa {
+      background: #25D366;
+      color: #FFFFFF;
+      padding: 7px 14px;
+      font-size: 0.82rem;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    .btn-wa:hover {
+      background: #1FB855;
+    }
+
+    .btn-wa-resend {
+      background: #E8F5E9;
+      color: #1B5E20;
+      border: 1px solid #A5D6A7;
+    }
+
+    .btn-wa-resend:hover {
+      background: #C8E6C9;
+    }
+
+    .btn-sm-copy {
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      background: #FAF7F2;
+      border: 1px solid var(--gold-border);
+      color: var(--gold-dark);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-sm-copy:hover {
+      background: var(--gold-primary);
+      color: #FFFFFF;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-pill {
+      background: var(--bg-body);
+      border: 1px solid var(--gold-border);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-num {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--gold-dark);
+    }
+
+    /* Search & Filter Toolbar */
+    .toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .filter-btn {
+      font-size: 0.78rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #DDD3C4;
+      background: #FFFFFF;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .filter-btn.active {
+      background: var(--gold-primary);
+      color: #FFFFFF;
+      border-color: var(--gold-primary);
+      font-weight: 600;
+    }
+
+    /* Table */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: var(--radius-sm);
+      border: 1px solid #EAE2D5;
+      background: #FFFFFF;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    th {
+      background: #FAF7F2;
+      color: var(--gold-dark);
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: 0.76rem;
+      letter-spacing: 1px;
+      padding: 12px 14px;
+      border-bottom: 1px solid #EAE2D5;
+      text-transform: uppercase;
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #F0EBE1;
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: #FDFAF5;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.74rem;
+      font-weight: 600;
+    }
+
+    .badge-pending {
+      background: #FFF8E1;
+      color: #F57F17;
+      border: 1px solid #FFE082;
+    }
+
+    .badge-sent {
+      background: #E8F5E9;
+      color: #2E7D32;
+      border: 1px solid #A5D6A7;
+    }
+
+    .guest-link-cell {
+      max-width: 220px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: monospace;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      fill: #D4AF37;
+      opacity: 0.5;
+      margin-bottom: 12px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #332F2B;
+      color: #FFFFFF;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 99999;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1 class="app-title-script">Dera &amp; Rifqi</h1>
+      <h2 class="app-title">WhatsApp Invitation Blaster &amp; Link Generator</h2>
+      <p class="app-desc">Kelola dan kirim undangan personal secara instan ke WhatsApp tamu undangan.</p>
+      
+      <div class="nav-links">
+        <a href="index.html" target="_blank" class="btn-nav">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          Buka Preview Undangan Web (index.html)
+        </a>
+      </div>
+    </header>
+
+    <div class="dashboard-grid">
+
+      <!-- =====================================================================
+           CARD 1: TEMPLATE PESAN WHATSAPP
+           ===================================================================== -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+            1. Template Pesan WhatsApp
+          </h3>
+          <span class="card-title-badge">Pesan Personal</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="baseUrlInput">Base URL Undangan (Website):</label>
+          <input type="url" id="baseUrlInput" class="form-input" placeholder="https://username.github.io/wedding/">
+          <p class="form-hint">Otomatis terdeteksi dari alamat saat ini. Sesuaikan jika menggunakan custom domain/GitHub Pages.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="messageTemplate">Template Pesan:</label>
+          <textarea id="messageTemplate" class="form-textarea" rows="8">Assalamu’alaikum Warahmatullahi Wabarakatuh
+
+Kepada Yth.
+Bapak/Ibu/Saudara/i: *{nama}*
+
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:
+
+💍 *Dera & Rifqi Fauzi Sulaeman Putra*
+
+🗓 *Rabu, 07 Oktober 2026*
+📍 Kediaman Mempelai Wanita — Jalan Geger Bintang 1 RT 021 RW 008
+
+Berikut tautan undangan digital Anda untuk info lengkap prosesi & lokasi:
+👉 {link}
+
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+
+Wassalamu’alaikum Warahmatullahi Wabarakatuh
+- Dera & Rifqi -</textarea>
+          <div class="tag-container">
+            <span class="tag-chip" onclick="insertTag('{nama}')">+ Sisipkan {nama}</span>
+            <span class="tag-chip" onclick="insertTag('{link}')">+ Sisipkan {link}</span>
+            <span class="tag-chip" onclick="resetDefaultTemplate()">↺ Reset Default</span>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <button type="button" class="btn btn-secondary" onclick="saveTemplateSetting()" style="width: 100%;">
+            Simpan Perubahan Template
+          </button>
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           CARD 2: BULK INPUT PARSER (EXCEL / SPREADSHEET)
+           ===================================================================== -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            2. Bulk Input Parser (Excel / Sheets)
+          </h3>
+          <span class="card-title-badge">Copy-Paste Tab/Koma</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="bulkTextInput">
+            Paste 2 Kolom dari Excel / Spreadsheet:
+          </label>
+          <p class="form-hint" style="margin-bottom: 8px;">
+            Kolom A: <strong>Nama Tamu</strong>, Kolom B: <strong>No HP (WhatsApp)</strong>
+          </p>
+          <textarea 
+            id="bulkTextInput" 
+            class="form-textarea" 
+            rows="8" 
+            placeholder="Contoh format:&#10;Budi Santoso&#09;081234567890&#10;Siti Aminah & Keluarga&#09;0821-9876-5432&#10;Bapak Firman&#09;6281311223344"
+          ></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-primary" onclick="parseBulkInput()" style="flex: 1;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Proses &amp; Tambah Tamu
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="loadSampleData()">
+            Muat Contoh Data
+          </button>
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           CARD 3: ANTREAN & EKSEKUSI KIRIM (TABLE VIEW)
+           ===================================================================== -->
+      <div class="card card-full">
+        <div class="card-header">
+          <h3 class="card-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+            3. Antrean Tamu &amp; Eksekusi Kirim WhatsApp
+          </h3>
+          <button type="button" class="btn btn-danger" onclick="clearAllGuests()" style="padding: 6px 12px; font-size: 0.78rem;">
+            Hapus Semua Tamu
+          </button>
+        </div>
+
+        <!-- Summary Statistics -->
+        <div class="stats-bar">
+          <div class="stat-pill">
+            <span>Total Tamu:</span>
+            <span class="stat-num" id="statTotal">0</span>
+          </div>
+          <div class="stat-pill">
+            <span>Belum Terkirim:</span>
+            <span class="stat-num" id="statPending" style="color: #F57F17;">0</span>
+          </div>
+          <div class="stat-pill">
+            <span>Sudah Terkirim:</span>
+            <span class="stat-num" id="statSent" style="color: #2E7D32;">0</span>
+          </div>
+        </div>
+
+        <!-- Toolbar: Search & Filter -->
+        <div class="toolbar-row">
+          <div class="search-box">
+            <input type="text" id="searchInput" class="form-input" placeholder="🔍 Cari nama tamu / no HP..." oninput="filterGuestTable()">
+          </div>
+          <div class="filter-group">
+            <button type="button" class="filter-btn active" onclick="setFilter('all', this)">Semua</button>
+            <button type="button" class="filter-btn" onclick="setFilter('pending', this)">Belum Terkirim</button>
+            <button type="button" class="filter-btn" onclick="setFilter('sent', this)">Terkirim</button>
+          </div>
+        </div>
+
+        <!-- Table View -->
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 45px; text-align: center;">No</th>
+                <th>Nama Tamu</th>
+                <th>No WhatsApp (62)</th>
+                <th>Link Undangan</th>
+                <th style="text-align: center;">Status</th>
+                <th style="text-align: center; width: 140px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="guestTableBody">
+              <!-- Rendered via JavaScript -->
+            </tbody>
+          </table>
+          <div id="emptyState" class="empty-state" style="display: none;">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            <p>Belum ada data tamu dalam antrean.</p>
+            <p style="font-size: 0.8rem; margin-top: 4px;">Paste data dari spreadsheet di Card 2 atau klik "Muat Contoh Data".</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <span id="toastContent">Pesan berhasil disalin!</span>
+  </div>
+
+  <!-- =========================================================================
+       GENERATOR & PARSER JAVASCRIPT LOGIC
+       ========================================================================= -->
+  <script>
+    // In-Memory State & Storage
+    let guests = [];
+    let currentFilter = 'all';
+
+    const STORAGE_KEY_GUESTS = 'wedding_dera_rifqi_guests_v1';
+    const STORAGE_KEY_TEMPLATE = 'wedding_dera_rifqi_template_v1';
+    const STORAGE_KEY_BASE_URL = 'wedding_dera_rifqi_baseurl_v1';
+
+    // Inisialisasi saat halaman dibuka
+    document.addEventListener('DOMContentLoaded', () => {
+      initBaseUrl();
+      loadSavedTemplate();
+      loadSavedGuests();
+      renderTable();
+    });
+
+    /**
+     * Otomatis deteksi Base URL yang tepat (mendukung GitHub Pages subpath atau root domain)
+     */
+    function initBaseUrl() {
+      const savedBase = localStorage.getItem(STORAGE_KEY_BASE_URL);
+      const input = document.getElementById('baseUrlInput');
+
+      if (savedBase) {
+        input.value = savedBase;
+      } else {
+        // Ambil URL saat ini dan buang 'generator.html'
+        let currentUrl = window.location.href.split('?')[0].split('#')[0];
+        if (currentUrl.endsWith('generator.html')) {
+          currentUrl = currentUrl.replace('generator.html', '');
+        } else if (!currentUrl.endsWith('/')) {
+          currentUrl = currentUrl + '/';
+        }
+        input.value = currentUrl;
+      }
+
+      input.addEventListener('change', () => {
+        let val = input.value.trim();
+        if (val && !val.endsWith('/')) {
+          val += '/';
+          input.value = val;
+        }
+        localStorage.setItem(STORAGE_KEY_BASE_URL, val);
+        renderTable();
+      });
+    }
+
+    function getBaseUrl() {
+      const input = document.getElementById('baseUrlInput');
+      let val = input.value.trim();
+      if (!val) {
+        let currentUrl = window.location.href.split('?')[0].split('#')[0].replace('generator.html', '');
+        if (!currentUrl.endsWith('/')) currentUrl += '/';
+        return currentUrl;
+      }
+      if (!val.endsWith('/')) val += '/';
+      return val;
+    }
+
+    /**
+     * Template Storage & Handlers
+     */
+    function loadSavedTemplate() {
+      const saved = localStorage.getItem(STORAGE_KEY_TEMPLATE);
+      if (saved) {
+        document.getElementById('messageTemplate').value = saved;
+      }
+    }
+
+    function saveTemplateSetting() {
+      const val = document.getElementById('messageTemplate').value;
+      localStorage.setItem(STORAGE_KEY_TEMPLATE, val);
+      showToast('Template pesan berhasil disimpan!');
+    }
+
+    function insertTag(tag) {
+      const textarea = document.getElementById('messageTemplate');
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value;
+      textarea.value = text.substring(0, start) + tag + text.substring(end);
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = start + tag.length;
+      saveTemplateSetting();
+    }
+
+    function resetDefaultTemplate() {
+      if (confirm('Kembalikan template ke pesan bawaan?')) {
+        document.getElementById('messageTemplate').value = 
+`Assalamu’alaikum Warahmatullahi Wabarakatuh
+
+Kepada Yth.
+Bapak/Ibu/Saudara/i: *{nama}*
+
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:
+
+💍 *Dera & Rifqi Fauzi Sulaeman Putra*
+
+🗓 *Rabu, 07 Oktober 2026*
+📍 Kediaman Mempelai Wanita — Jalan Geger Bintang 1 RT 021 RW 008
+
+Berikut tautan undangan digital Anda untuk info lengkap prosesi & lokasi:
+👉 {link}
+
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+
+Wassalamu’alaikum Warahmatullahi Wabarakatuh
+- Dera & Rifqi -`;
+        saveTemplateSetting();
+      }
+    }
+
+    /**
+     * Normalisasi Nomor WhatsApp:
+     * - Hapus spasi, strip, tanda tambah, tanda kurung
+     * - Awalan 08... -> 628...
+     * - Awalan 8...  -> 628...
+     * - Awalan +628... -> 628...
+     */
+    function cleanPhoneNumber(raw) {
+      if (!raw) return '';
+      // Hapus semua karakter non-angka
+      let cleaned = raw.replace(/\D/g, '');
+      
+      // Jika diawali 08 -> ganti 628
+      if (cleaned.startsWith('08')) {
+        cleaned = '62' + cleaned.substring(1);
+      } else if (cleaned.startsWith('8')) {
+        // Jika diawali 8 -> tambahkan 62
+        cleaned = '62' + cleaned;
+      } else if (cleaned.startsWith('6208')) {
+        // Jika typo 6208 -> 628
+        cleaned = '62' + cleaned.substring(3);
+      }
+      return cleaned;
+    }
+
+    /**
+     * Bulk Input Parser:
+     * Mendukung pemisah Tab (\t), Koma (,), atau Titik Koma (;)
+     */
+    function parseBulkInput() {
+      const textarea = document.getElementById('bulkTextInput');
+      const text = textarea.value.trim();
+
+      if (!text) {
+        alert('Silakan tempel (paste) data dari Excel / Spreadsheet terlebih dahulu.');
+        return;
+      }
+
+      const lines = text.split(/\r?\n/);
+      let countSuccess = 0;
+
+      lines.forEach((line) => {
+        const trimmedLine = line.trim();
+        if (!trimmedLine) return;
+
+        let parts = [];
+        if (trimmedLine.includes('\t')) {
+          parts = trimmedLine.split('\t');
+        } else if (trimmedLine.includes(';')) {
+          parts = trimmedLine.split(';');
+        } else if (trimmedLine.includes(',')) {
+          parts = trimmedLine.split(',');
+        } else {
+          // Fallback coba split spasi terakhir untuk nomor hp
+          const lastSpaceIndex = trimmedLine.lastIndexOf(' ');
+          if (lastSpaceIndex > -1) {
+            parts = [
+              trimmedLine.substring(0, lastSpaceIndex),
+              trimmedLine.substring(lastSpaceIndex + 1)
+            ];
+          }
+        }
+
+        if (parts.length >= 2) {
+          const rawName = parts[0].trim();
+          const rawPhone = parts.slice(1).join(' ').trim();
+          const formattedPhone = cleanPhoneNumber(rawPhone);
+
+          if (rawName) {
+            // Hindari duplikasi nomor yang persis sama jika sudah ada
+            const existingIndex = guests.findIndex(g => g.phone === formattedPhone && g.name === rawName);
+            if (existingIndex === -1) {
+              guests.push({
+                id: 'g_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                name: rawName,
+                phone: formattedPhone,
+                status: 'pending' // 'pending' | 'sent'
+              });
+              countSuccess++;
+            }
+          }
+        }
+      });
+
+      if (countSuccess > 0) {
+        saveGuests();
+        renderTable();
+        textarea.value = '';
+        showToast(`Berhasil menambahkan ${countSuccess} tamu ke dalam antrean!`);
+      } else {
+        alert('Gagal membaca data. Pastikan format terdiri dari 2 kolom: Nama Tamu dan No HP.');
+      }
+    }
+
+    /**
+     * Memuat data contoh untuk uji coba instan
+     */
+    function loadSampleData() {
+      const sampleText = 
+`Budi Santoso\t0812-3456-7890
+Siti Aminah & Keluarga\t0821-9876-5432
+Ahmad Dahlan\t0857-1122-3344
+Rina Kartika, S.Pd\t0878-5566-7788
+Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
+      
+      document.getElementById('bulkTextInput').value = sampleText;
+      showToast('Data contoh telah dimuat ke kotak input!');
+    }
+
+    /**
+     * Persistence LocalStorage
+     */
+    function saveGuests() {
+      localStorage.setItem(STORAGE_KEY_GUESTS, JSON.stringify(guests));
+      updateStats();
+    }
+
+    function loadSavedGuests() {
+      try {
+        const data = localStorage.getItem(STORAGE_KEY_GUESTS);
+        if (data) {
+          guests = JSON.parse(data);
+        }
+      } catch (e) {
+        console.error('Error loading guests:', e);
+        guests = [];
+      }
+    }
+
+    function clearAllGuests() {
+      if (guests.length === 0) return;
+      if (confirm('Apakah Anda yakin ingin menghapus SELURUH data tamu dalam antrean?')) {
+        guests = [];
+        saveGuests();
+        renderTable();
+        showToast('Semua data tamu telah dihapus.');
+      }
+    }
+
+    /**
+     * Update Statistik Summary
+     */
+    function updateStats() {
+      const total = guests.length;
+      const sent = guests.filter(g => g.status === 'sent').length;
+      const pending = total - sent;
+
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statPending').textContent = pending;
+      document.getElementById('statSent').textContent = sent;
+    }
+
+    /**
+     * Filter & Search
+     */
+    function setFilter(filterType, element) {
+      currentFilter = filterType;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+      renderTable();
+    }
+
+    function filterGuestTable() {
+      renderTable();
+    }
+
+    /**
+     * Render Tabel Tamu
+     */
+    function renderTable() {
+      const tbody = document.getElementById('guestTableBody');
+      const emptyState = document.getElementById('emptyState');
+      const searchQuery = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+      const baseUrl = getBaseUrl();
+      const template = document.getElementById('messageTemplate').value;
+
+      tbody.innerHTML = '';
+
+      // Filter Data
+      let filtered = guests.filter(guest => {
+        if (currentFilter === 'pending' && guest.status !== 'pending') return false;
+        if (currentFilter === 'sent' && guest.status !== 'sent') return false;
+        if (searchQuery) {
+          const matchName = guest.name.toLowerCase().includes(searchQuery);
+          const matchPhone = guest.phone.includes(searchQuery);
+          return matchName || matchPhone;
+        }
+        return true;
+      });
+
+      updateStats();
+
+      if (filtered.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+      } else {
+        emptyState.style.display = 'none';
+      }
+
+      filtered.forEach((guest, index) => {
+        // Generate Link Undangan Spesifik: base_url/?to=Nama+Tamu
+        const encodedName = encodeURIComponent(guest.name).replace(/%20/g, '+');
+        const guestLink = `${baseUrl}?to=${encodedName}`;
+
+        // Generate Teks Pesan WhatsApp
+        const waMessage = template
+          .replace(/{nama}/g, guest.name)
+          .replace(/{link}/g, guestLink);
+
+        const waUrl = `https://wa.me/${guest.phone}?text=${encodeURIComponent(waMessage)}`;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align: center; color: var(--text-muted); font-weight: 600;">${index + 1}</td>
+          <td>
+            <strong>${escapeHtml(guest.name)}</strong>
+          </td>
+          <td>
+            <span style="font-family: monospace;">${guest.phone ? '+' + guest.phone : '<span style="color:#E53935;">(No HP Kosong)</span>'}</span>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="guest-link-cell" title="${guestLink}">${guestLink}</span>
+              <button type="button" class="btn-sm-copy" onclick="copyText('${guestLink}')" title="Salin Link Undangan">Salin</button>
+            </div>
+          </td>
+          <td style="text-align: center;">
+            <span class="badge ${guest.status === 'sent' ? 'badge-sent' : 'badge-pending'}">
+              ${guest.status === 'sent' ? '✓ Terkirim' : 'Belum'}
+            </span>
+          </td>
+          <td style="text-align: center;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
+              <a 
+                href="${guest.phone ? waUrl : 'javascript:void(0)'}" 
+                target="_blank" 
+                class="btn ${guest.status === 'sent' ? 'btn-wa-resend' : 'btn-wa'}"
+                onclick="markAsSent('${guest.id}')"
+                style="${!guest.phone ? 'opacity:0.5; pointer-events:none;' : ''}"
+              >
+                ${guest.status === 'sent' ? 'Kirim Ulang' : 'Kirim WA'}
+              </a>
+              <button 
+                type="button" 
+                onclick="deleteGuest('${guest.id}')" 
+                title="Hapus tamu"
+                style="background:none; border:none; cursor:pointer; color:#999; padding:4px;"
+              >
+                ✕
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    /**
+     * Tandai Status sebagai 'Terkirim' saat tombol Kirim WA diklik
+     */
+    function markAsSent(guestId) {
+      const target = guests.find(g => g.id === guestId);
+      if (target) {
+        target.status = 'sent';
+        saveGuests();
+        // Beri sedikit jeda agar tab WA terbuka sebelum render ulang badge
+        setTimeout(() => {
+          renderTable();
+        }, 500);
+      }
+    }
+
+    /**
+     * Hapus 1 Tamu
+     */
+    function deleteGuest(guestId) {
+      guests = guests.filter(g => g.id !== guestId);
+      saveGuests();
+      renderTable();
+      showToast('Tamu dihapus dari antrean.');
+    }
+
+    /**
+     * Salin Teks Bebas ke Clipboard
+     */
+    function copyText(text) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Link undangan disalin ke clipboard!');
+        });
+      } else {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast('Link undangan disalin ke clipboard!');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastContent = document.getElementById('toastContent');
+      toastContent.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>

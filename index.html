@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>The Wedding of Dera & Rifqi | Undangan Pernikahan</title>
+  <meta name="description" content="Pernikahan Dera & Rifqi Fauzi Sulaeman Putra - Rabu, 07 Oktober 2026. Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.">
+  
+  <!-- Open Graph / WhatsApp Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Wedding of Dera & Rifqi">
+  <meta property="og:description" content="Kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami pada Rabu, 07 Oktober 2026.">
+  <meta property="og:image" content="assets/foto-pengantin.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="locked">
+
+  <!-- =========================================================================
+       AUDIO ELEMENT & FLOATING CONTROLLER
+       ========================================================================= -->
+  <audio id="weddingAudio" src="assets/musik.mp3" preload="auto" loop></audio>
+
+  <button type="button" id="musicToggleBtn" class="music-toggle" aria-label="Toggle Musik Latar" title="Putar / Hentikan Musik">
+    <!-- Music Disc / Note SVG Icon -->
+    <svg id="musicIconPlay" viewBox="0 0 24 24">
+      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+    </svg>
+    <svg id="musicIconPause" viewBox="0 0 24 24" style="display:none;">
+      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+    </svg>
+  </button>
+
+  <!-- =========================================================================
+       1. COVER OVERLAY (FULLSCREEN POP-UP AWAL)
+       ========================================================================= -->
+  <div id="coverOverlay" class="cover-overlay">
+    <!-- Floral Watercolor Corners Background SVG -->
+    <svg class="floral-corner-tl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C40,10 80,40 100,100 C70,70 30,50 0,40 Z" fill="#D4AF37" fill-opacity="0.18"/>
+      <path d="M10,0 C30,30 60,60 120,70 C80,50 50,20 10,0 Z" fill="#C5A059" fill-opacity="0.22"/>
+      <circle cx="45" cy="45" r="10" fill="#E8DEC8" fill-opacity="0.4"/>
+      <circle cx="75" cy="25" r="6" fill="#DFBF82" fill-opacity="0.35"/>
+    </svg>
+    <svg class="floral-corner-tr" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C40,10 80,40 100,100 C70,70 30,50 0,40 Z" fill="#D4AF37" fill-opacity="0.18"/>
+      <path d="M10,0 C30,30 60,60 120,70 C80,50 50,20 10,0 Z" fill="#C5A059" fill-opacity="0.22"/>
+    </svg>
+
+    <div class="cover-container">
+      <div class="cover-top-content">
+        <span class="cover-badge">You're Invited to The Wedding of</span>
+        
+        <div class="cover-photo-wrapper">
+          <div class="cover-photo-frame">
+            <img 
+              src="assets/foto-pengantin.jpg" 
+              alt="Mempelai Dera & Rifqi" 
+              class="cover-photo-img"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80';"
+            >
+          </div>
+        </div>
+
+        <h1 class="cover-names">Dera &amp; Rifqi</h1>
+        <p class="cover-date">Rabu, 07 Oktober 2026</p>
+      </div>
+
+      <div class="cover-bottom-content">
+        <div class="cover-guest-box">
+          <p class="cover-guest-title">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+          <h2 id="guestNameCover" class="cover-guest-name">Tamu Undangan</h2>
+          <p class="cover-guest-sub">*Mohon maaf apabila ada kesalahan penulisan nama/gelar</p>
+        </div>
+
+        <button type="button" id="btnOpenInvitation" class="btn-open-invite">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          Buka Undangan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MAIN WRAPPER (MOBILE FRAME 480PX)
+       ========================================================================= -->
+  <div class="page-wrapper">
+
+    <!-- Top Corner Floral Ornament -->
+    <svg class="floral-corner-tl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C40,10 80,40 100,100 C70,70 30,50 0,40 Z" fill="#D4AF37" fill-opacity="0.18"/>
+      <path d="M10,0 C30,30 60,60 120,70 C80,50 50,20 10,0 Z" fill="#C5A059" fill-opacity="0.22"/>
+    </svg>
+    <svg class="floral-corner-tr" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C40,10 80,40 100,100 C70,70 30,50 0,40 Z" fill="#D4AF37" fill-opacity="0.18"/>
+      <path d="M10,0 C30,30 60,60 120,70 C80,50 50,20 10,0 Z" fill="#C5A059" fill-opacity="0.22"/>
+    </svg>
+
+    <!-- SECTION 1: HERO & PEMBUKA ISLAMI -->
+    <section class="wedding-section hero-section reveal-on-scroll">
+      <p class="hero-subtitle">The Wedding Celebration of</p>
+      <h2 class="hero-title">Dera &amp; Rifqi</h2>
+      <span class="hero-date-badge">Rabu, 07 Oktober 2026</span>
+
+      <div class="ornament-divider">
+        <span class="line"></span>
+        <span class="icon">❦</span>
+        <span class="line"></span>
+      </div>
+
+      <div class="card-luxury islamic-box">
+        <p class="basmalah arabic-font">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+        <h3 class="salam">Assalamu’alaikum Warahmatullahi Wabarakatuh</h3>
+        <p class="islamic-text">
+          Maha Suci Allah SWT yang telah menciptakan makhluk-Nya berpasang-pasangan. Dengan memohon rahmat dan ridho-Nya, kami bermaksud menyelenggarakan syukuran pernikahan putra-putri kami tercinta.
+        </p>
+        <div class="ornament-divider" style="margin: 15px auto;">
+          <span class="line"></span>
+          <span class="icon">✦</span>
+          <span class="line"></span>
+        </div>
+        <p class="islamic-text" style="font-size: 0.82rem; font-style: italic; color: var(--text-muted);">
+          "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan untukmu pasangan-pasangan dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."<br>
+          <strong>(QS. Ar-Rum: 21)</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 2: PROFIL KEDUA MEMPELAI -->
+    <section class="wedding-section reveal-on-scroll">
+      <div class="card-luxury couple-profile-card">
+        
+        <!-- Mempelai Wanita -->
+        <div class="bride-groom-item">
+          <p class="bride-groom-role">Mempelai Wanita</p>
+          <h3 class="bride-groom-name">Dera</h3>
+          <p class="bride-groom-parents">
+            Putri Ke-1 Dari Pasangan<br>
+            <strong>Bpk. Firman &amp; Ibu Susi</strong>
+          </p>
+        </div>
+
+        <!-- Ampersand Divider -->
+        <div class="couple-ampersand">&amp;</div>
+
+        <!-- Mempelai Pria -->
+        <div class="bride-groom-item">
+          <p class="bride-groom-role">Mempelai Pria</p>
+          <h3 class="bride-groom-name" style="font-size: 2.8rem;">Rifqi</h3>
+          <p class="bride-groom-fullname">Rifqi Fauzi Sulaeman Putra</p>
+          <p class="bride-groom-parents">
+            Putra Ke-1 Dari Pasangan<br>
+            <strong>Bpk. Dadang &amp; Ibu Sity Fatimah</strong>
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: 1 FOTO GALERI SPESIAL -->
+    <section class="wedding-section reveal-on-scroll">
+      <div class="card-luxury">
+        <span class="event-badge">Spesial Moment</span>
+        <div class="special-photo-frame">
+          <img 
+            src="assets/foto-pengantin.jpg" 
+            alt="Mempelai Dera & Rifqi Fauzi Sulaeman Putra" 
+            loading="lazy"
+            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80';"
+          >
+        </div>
+        <p class="special-photo-quote">
+          "Dua jiwa menyatu dalam satu ikatan suci, melangkah bersama menggapai ridho Illahi menuju mahligai sakinah, mawaddah, warahmah."
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 4: COUNTDOWN TIMER -->
+    <section class="wedding-section reveal-on-scroll">
+      <div class="card-luxury">
+        <span class="event-badge">Menuju Hari Bahagia</span>
+        <h3 class="heading-font" style="font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;">Countdown To The Big Day</h3>
+        <p style="font-size: 0.84rem; color: var(--text-secondary);">Rabu, 07 Oktober 2026 • 08.00 WIB</p>
+
+        <div class="countdown-box" id="countdownBox">
+          <div class="countdown-item">
+            <span class="countdown-num" id="cdDays">00</span>
+            <span class="countdown-label">Hari</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-num" id="cdHours">00</span>
+            <span class="countdown-label">Jam</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-num" id="cdMinutes">00</span>
+            <span class="countdown-label">Menit</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-num" id="cdSeconds">00</span>
+            <span class="countdown-label">Detik</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: RANGKAIAN ACARA (SAVE THE DATE) -->
+    <section class="wedding-section reveal-on-scroll">
+      
+      <!-- Card Akad Nikah -->
+      <div class="card-luxury">
+        <span class="event-badge">Akad Nikah</span>
+        <h3 class="event-title">Prosesi Ijab Qabul</h3>
+        
+        <div class="event-detail-row">
+          <!-- Calendar Icon -->
+          <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+          <strong>Rabu, 07 Oktober 2026</strong>
+        </div>
+
+        <div class="event-detail-row">
+          <!-- Clock Icon -->
+          <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          <span>Pukul 08.00 WIB s/d Selesai</span>
+        </div>
+
+        <div class="ornament-divider" style="margin: 14px auto;">
+          <span class="line"></span>
+          <span class="icon">❦</span>
+          <span class="line"></span>
+        </div>
+
+        <p class="event-location">
+          Bertempat di:<br>
+          <strong class="event-location-address">Kediaman Mempelai Wanita</strong><br>
+          Jalan Geger Bintang 1 RT 021 RW 008
+        </p>
+      </div>
+
+      <!-- Card Resepsi Pernikahan -->
+      <div class="card-luxury">
+        <span class="event-badge">Resepsi Pernikahan</span>
+        <h3 class="event-title">Walimatul 'Ursy</h3>
+        
+        <div class="event-detail-row">
+          <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+          <strong>Rabu, 07 Oktober 2026</strong>
+        </div>
+
+        <div class="event-detail-row">
+          <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          <span>Pukul 10.00 WIB s/d Selesai</span>
+        </div>
+
+        <div class="ornament-divider" style="margin: 14px auto;">
+          <span class="line"></span>
+          <span class="icon">❦</span>
+          <span class="line"></span>
+        </div>
+
+        <p class="event-location">
+          Bertempat di:<br>
+          <strong class="event-location-address">Kediaman Mempelai Wanita</strong><br>
+          Jalan Geger Bintang 1 RT 021 RW 008
+        </p>
+
+        <!-- Entertainment Notice Banner -->
+        <div class="entertainment-banner">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+          <span>HIBURAN: Dangdut &amp; Pengajian</span>
+        </div>
+
+        <!-- Google Maps Action Button -->
+        <a 
+          href="https://www.google.com/maps/search/?api=1&query=Jalan+Geger+Bintang+1+RT+021+RW+008" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="btn-gold-action"
+        >
+          <!-- Location Pin SVG -->
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Petunjuk Arah Google Maps
+        </a>
+      </div>
+
+    </section>
+
+    <!-- SECTION 6: TANDA KASIH / AMPLOP DIGITAL -->
+    <section class="wedding-section reveal-on-scroll">
+      <div class="card-luxury">
+        <span class="event-badge">Amplop Digital</span>
+        <h3 class="heading-font" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Tanda Kasih</h3>
+        <p style="font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 20px;">
+          Doa restu Anda merupakan karunia terindah bagi kami. Bagi keluarga dan sahabat yang ingin memberikan tanda kasih secara digital, dapat melalui dompet digital (DANA) berikut:
+        </p>
+
+        <!-- Card DANA 1: Rifqi Fauzi Sulaeman Putra -->
+        <div class="gift-card">
+          <div class="gift-card-header">
+            <span class="dana-logo-badge">DANA</span>
+            <div class="dana-icon-chip">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#108EE9">
+                <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm-1 14H5c-.55 0-1-.45-1-1V8h16v9c0 .55-.45 1-1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="gift-account-number" id="numDanaRifqi">082116777722</div>
+          <p class="gift-account-name">a.n <strong>Rifqi Fauzi Sulaeman Putra</strong></p>
+          <button 
+            type="button" 
+            class="btn-copy-dana" 
+            id="btnCopyRifqi" 
+            onclick="copyToClipboard('082116777722', 'btnCopyRifqi', 'Salin Nomor DANA Rifqi')"
+          >
+            <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            <span>Salin Nomor DANA Rifqi</span>
+          </button>
+        </div>
+
+        <!-- Card DANA 2: Dera -->
+        <div class="gift-card">
+          <div class="gift-card-header">
+            <span class="dana-logo-badge">DANA</span>
+            <div class="dana-icon-chip">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#108EE9">
+                <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm-1 14H5c-.55 0-1-.45-1-1V8h16v9c0 .55-.45 1-1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="gift-account-number" id="numDanaDera">082116777722</div>
+          <p class="gift-account-name">a.n <strong>Dera</strong></p>
+          <button 
+            type="button" 
+            class="btn-copy-dana" 
+            id="btnCopyDera" 
+            onclick="copyToClipboard('082116777722', 'btnCopyDera', 'Salin Nomor DANA Dera')"
+          >
+            <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            <span>Salin Nomor DANA Dera</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 7: PENUTUP & KELUARGA BESAR -->
+    <section class="wedding-section reveal-on-scroll">
+      <div class="card-luxury closing-card">
+        <h3 class="heading-font" style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Terima Kasih</h3>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px;">
+          Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir serta memberikan doa restu kepada kami kedua mempelai.
+        </p>
+
+        <p class="salam" style="font-size: 0.95rem; margin-bottom: 18px;">Wassalamu’alaikum Warahmatullahi Wabarakatuh</p>
+
+        <!-- Turut Mengundang / Keluarga Besar -->
+        <div class="family-box">
+          <p class="family-title">Turut Berbahagia Keluarga Besar:</p>
+          <p class="family-item">Kel. Bpk. Firman &amp; Ibu Susi</p>
+          <p class="family-item">Kel. Bpk. Dadang &amp; Ibu Sity Fatimah</p>
+        </div>
+
+        <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 14px;">Kami yang berbahagia,</p>
+        <h2 class="closing-signature">Dera &amp; Rifqi</h2>
+      </div>
+    </section>
+
+    <!-- FOOTER CREDIT -->
+    <footer class="footer-credit">
+      <p>&copy; 2026 The Wedding of Dera &amp; Rifqi. All Rights Reserved.</p>
+    </footer>
+
+  </div>
+
+  <!-- Toast Copy Notification -->
+  <div id="toastMsg" class="toast-msg">
+    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    <span id="toastText">Nomor DANA berhasil disalin!</span>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
