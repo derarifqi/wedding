@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generator &amp; WhatsApp Blaster Undangan | Dera &amp; Rifqi</title>
-  <meta name="description" content="Dashboard Generator Link Undangan dan WhatsApp Sender Dera & Rifqi.">
+  <title>WhatsApp Link Generator &amp; Excel Blaster | Dera &amp; Rifqi</title>
+  <meta name="description" content="Dashboard Generator Link Undangan dan WhatsApp Sender Pernikahan Dera & Rifqi.">
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
   
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,15 +20,13 @@
     :root {
       --bg-body: #F7F5F0;
       --bg-card: #FFFFFF;
-      --gold-primary: #C5A059;
-      --gold-dark: #9E7A36;
+      --gold-primary: #C59B27;
+      --gold-dark: #9E7124;
       --gold-light: #F9F3EA;
-      --gold-border: rgba(197, 160, 89, 0.35);
+      --gold-border: rgba(197, 155, 39, 0.35);
       --text-main: #332F2B;
       --text-muted: #746D65;
       --wa-green: #25D366;
-      --wa-green-dark: #128C7E;
-      --danger: #E53935;
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
@@ -57,7 +58,7 @@
     /* Header */
     .app-header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
       padding-bottom: 20px;
       border-bottom: 1px solid var(--gold-border);
     }
@@ -95,12 +96,12 @@
     .btn-nav {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       font-size: 0.82rem;
       font-weight: 600;
       color: var(--gold-dark);
       text-decoration: none;
-      padding: 6px 14px;
+      padding: 7px 16px;
       background: #FFFFFF;
       border: 1px solid var(--gold-border);
       border-radius: 9999px;
@@ -145,7 +146,7 @@
       justify-content: space-between;
       margin-bottom: 16px;
       padding-bottom: 12px;
-      border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+      border-bottom: 1px solid rgba(197, 155, 39, 0.2);
     }
 
     .card-title {
@@ -204,7 +205,7 @@
     .form-textarea:focus {
       outline: none;
       border-color: var(--gold-primary);
-      box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.2);
+      box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.2);
       background: #FFFFFF;
     }
 
@@ -217,7 +218,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-top: 6px;
+      margin-top: 8px;
     }
 
     .tag-chip {
@@ -225,7 +226,7 @@
       color: var(--gold-dark);
       font-size: 0.74rem;
       font-weight: 600;
-      padding: 3px 8px;
+      padding: 4px 10px;
       border-radius: 4px;
       cursor: pointer;
       user-select: none;
@@ -253,13 +254,13 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #DFBF82 0%, #C5A059 100%);
+      background: linear-gradient(135deg, #C2923F 0%, #9E7124 100%);
       color: #FFFFFF;
-      box-shadow: 0 4px 14px rgba(197, 160, 89, 0.35);
+      box-shadow: 0 4px 14px rgba(194, 146, 63, 0.35);
     }
 
     .btn-primary:hover {
-      box-shadow: 0 6px 18px rgba(197, 160, 89, 0.5);
+      box-shadow: 0 6px 18px rgba(194, 146, 63, 0.5);
       transform: translateY(-1px);
     }
 
@@ -274,7 +275,7 @@
 
     .btn-danger {
       background: #FFEBEE;
-      color: var(--danger);
+      color: #D32F2F;
     }
 
     .btn-danger:hover {
@@ -454,19 +455,17 @@
       color: var(--text-muted);
     }
 
-    /* Empty state */
     .empty-state {
       text-align: center;
       padding: 40px 20px;
       color: var(--text-muted);
     }
 
-    .empty-state svg {
-      width: 48px;
-      height: 48px;
-      fill: #D4AF37;
+    .empty-state i {
+      font-size: 2.5rem;
+      color: var(--gold-primary);
       opacity: 0.5;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     /* Toast */
@@ -502,13 +501,13 @@
     <!-- Header -->
     <header class="app-header">
       <h1 class="app-title-script">Dera &amp; Rifqi</h1>
-      <h2 class="app-title">WhatsApp Invitation Blaster &amp; Link Generator</h2>
-      <p class="app-desc">Kelola dan kirim undangan personal secara instan ke WhatsApp tamu undangan.</p>
+      <h2 class="app-title">WhatsApp Link Generator &amp; Excel Blaster</h2>
+      <p class="app-desc">Kelola template pesan, import data dari Excel/Spreadsheet, dan kirim pesan personal WhatsApp ke para tamu.</p>
       
       <div class="nav-links">
         <a href="index.html" target="_blank" class="btn-nav">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-          Buka Preview Undangan Web (index.html)
+          <i class="fa-solid fa-eye"></i>
+          <span>Buka Preview Undangan Web (index.html)</span>
         </a>
       </div>
     </header>
@@ -521,7 +520,7 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+            <i class="fa-solid fa-message"></i>
             1. Template Pesan WhatsApp
           </h3>
           <span class="card-title-badge">Pesan Personal</span>
@@ -529,8 +528,8 @@
 
         <div class="form-group">
           <label class="form-label" for="baseUrlInput">Base URL Undangan (Website):</label>
-          <input type="url" id="baseUrlInput" class="form-input" placeholder="https://username.github.io/wedding/">
-          <p class="form-hint">Otomatis terdeteksi dari alamat saat ini. Sesuaikan jika menggunakan custom domain/GitHub Pages.</p>
+          <input type="url" id="baseUrlInput" class="form-input" placeholder="https://derarifqi.github.io/wedding/">
+          <p class="form-hint">Otomatis terdeteksi dari domain website saat ini. Sesuaikan jika menggunakan custom domain.</p>
         </div>
 
         <div class="form-group">
@@ -540,17 +539,17 @@
 Kepada Yth.
 Bapak/Ibu/Saudara/i: *{nama}*
 
-Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara syukuran pernikahan kami:
 
 💍 *Dera & Rifqi Fauzi Sulaeman Putra*
 
 🗓 *Rabu, 07 Oktober 2026*
 📍 Kediaman Mempelai Wanita — Jalan Geger Bintang 1 RT 021 RW 008
 
-Berikut tautan undangan digital Anda untuk info lengkap prosesi & lokasi:
+Berikut tautan undangan digital Anda untuk informasi lengkap prosesi dan petunjuk arah lokasi:
 👉 {link}
 
-Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu kepada kami kedua mempelai.
 
 Wassalamu’alaikum Warahmatullahi Wabarakatuh
 - Dera & Rifqi -</textarea>
@@ -563,7 +562,8 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
 
         <div class="form-group" style="margin-bottom: 0;">
           <button type="button" class="btn btn-secondary" onclick="saveTemplateSetting()" style="width: 100%;">
-            Simpan Perubahan Template
+            <i class="fa-solid fa-floppy-disk"></i>
+            Simpan Template Pesan
           </button>
         </div>
       </div>
@@ -574,30 +574,30 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-            2. Bulk Input Parser (Excel / Sheets)
+            <i class="fa-solid fa-file-excel"></i>
+            2. Bulk Input Excel Parser
           </h3>
           <span class="card-title-badge">Copy-Paste Tab/Koma</span>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="bulkTextInput">
-            Paste 2 Kolom dari Excel / Spreadsheet:
+            Paste 2 Kolom dari Excel / Google Spreadsheet:
           </label>
           <p class="form-hint" style="margin-bottom: 8px;">
-            Kolom A: <strong>Nama Tamu</strong>, Kolom B: <strong>No HP (WhatsApp)</strong>
+            Kolom 1: <strong>Nama Tamu</strong>, Kolom 2: <strong>No WhatsApp</strong>
           </p>
           <textarea 
             id="bulkTextInput" 
             class="form-textarea" 
             rows="8" 
-            placeholder="Contoh format:&#10;Budi Santoso&#09;081234567890&#10;Siti Aminah & Keluarga&#09;0821-9876-5432&#10;Bapak Firman&#09;6281311223344"
+            placeholder="Contoh data Excel/Spreadsheet:&#10;Budi Santoso&#09;081234567890&#10;Siti Aminah & Keluarga&#09;0821-9876-5432&#10;Bpk. Firman&#09;6281311223344"
           ></textarea>
         </div>
 
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
           <button type="button" class="btn btn-primary" onclick="parseBulkInput()" style="flex: 1;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            <i class="fa-solid fa-user-plus"></i>
             Proses &amp; Tambah Tamu
           </button>
           <button type="button" class="btn btn-secondary" onclick="loadSampleData()">
@@ -607,15 +607,16 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
       </div>
 
       <!-- =====================================================================
-           CARD 3: ANTREAN & EKSEKUSI KIRIM (TABLE VIEW)
+           CARD 3: ANTREAN & EKSEKUSI KIRIM WA (TABLE VIEW)
            ===================================================================== -->
       <div class="card card-full">
         <div class="card-header">
           <h3 class="card-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+            <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 1.25rem;"></i>
             3. Antrean Tamu &amp; Eksekusi Kirim WhatsApp
           </h3>
-          <button type="button" class="btn btn-danger" onclick="clearAllGuests()" style="padding: 6px 12px; font-size: 0.78rem;">
+          <button type="button" class="btn btn-danger" onclick="clearAllGuests()" style="padding: 6px 14px; font-size: 0.78rem;">
+            <i class="fa-solid fa-trash-can"></i>
             Hapus Semua Tamu
           </button>
         </div>
@@ -666,7 +667,7 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
             </tbody>
           </table>
           <div id="emptyState" class="empty-state" style="display: none;">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            <i class="fa-solid fa-inbox"></i>
             <p>Belum ada data tamu dalam antrean.</p>
             <p style="font-size: 0.8rem; margin-top: 4px;">Paste data dari spreadsheet di Card 2 atau klik "Muat Contoh Data".</p>
           </div>
@@ -678,22 +679,21 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
 
   <!-- Toast Notification -->
   <div id="toast" class="toast">
-    <span id="toastContent">Pesan berhasil disalin!</span>
+    <i class="fa-solid fa-circle-check" style="color: #81C784;"></i>
+    <span id="toastContent">Pesan berhasil disimpan!</span>
   </div>
 
   <!-- =========================================================================
        GENERATOR & PARSER JAVASCRIPT LOGIC
        ========================================================================= -->
   <script>
-    // In-Memory State & Storage
     let guests = [];
     let currentFilter = 'all';
 
-    const STORAGE_KEY_GUESTS = 'wedding_dera_rifqi_guests_v1';
-    const STORAGE_KEY_TEMPLATE = 'wedding_dera_rifqi_template_v1';
-    const STORAGE_KEY_BASE_URL = 'wedding_dera_rifqi_baseurl_v1';
+    const STORAGE_KEY_GUESTS = 'wedding_dera_rifqi_guests_v2';
+    const STORAGE_KEY_TEMPLATE = 'wedding_dera_rifqi_template_v2';
+    const STORAGE_KEY_BASE_URL = 'wedding_dera_rifqi_baseurl_v2';
 
-    // Inisialisasi saat halaman dibuka
     document.addEventListener('DOMContentLoaded', () => {
       initBaseUrl();
       loadSavedTemplate();
@@ -711,7 +711,6 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
       if (savedBase) {
         input.value = savedBase;
       } else {
-        // Ambil URL saat ini dan buang 'generator.html'
         let currentUrl = window.location.href.split('?')[0].split('#')[0];
         if (currentUrl.endsWith('generator.html')) {
           currentUrl = currentUrl.replace('generator.html', '');
@@ -779,17 +778,17 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
 Kepada Yth.
 Bapak/Ibu/Saudara/i: *{nama}*
 
-Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara syukuran pernikahan kami:
 
 💍 *Dera & Rifqi Fauzi Sulaeman Putra*
 
 🗓 *Rabu, 07 Oktober 2026*
 📍 Kediaman Mempelai Wanita — Jalan Geger Bintang 1 RT 021 RW 008
 
-Berikut tautan undangan digital Anda untuk info lengkap prosesi & lokasi:
+Berikut tautan undangan digital Anda untuk informasi lengkap prosesi dan petunjuk arah lokasi:
 👉 {link}
 
-Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu kepada kami kedua mempelai.
 
 Wassalamu’alaikum Warahmatullahi Wabarakatuh
 - Dera & Rifqi -`;
@@ -798,33 +797,28 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
     }
 
     /**
-     * Normalisasi Nomor WhatsApp:
-     * - Hapus spasi, strip, tanda tambah, tanda kurung
+     * Normalisasi Nomor WhatsApp Cerdas:
+     * - Hapus spasi, strip (-), tanda plus (+), dan karakter non-angka
      * - Awalan 08... -> 628...
      * - Awalan 8...  -> 628...
      * - Awalan +628... -> 628...
      */
     function cleanPhoneNumber(raw) {
       if (!raw) return '';
-      // Hapus semua karakter non-angka
       let cleaned = raw.replace(/\D/g, '');
       
-      // Jika diawali 08 -> ganti 628
       if (cleaned.startsWith('08')) {
         cleaned = '62' + cleaned.substring(1);
       } else if (cleaned.startsWith('8')) {
-        // Jika diawali 8 -> tambahkan 62
         cleaned = '62' + cleaned;
       } else if (cleaned.startsWith('6208')) {
-        // Jika typo 6208 -> 628
         cleaned = '62' + cleaned.substring(3);
       }
       return cleaned;
     }
 
     /**
-     * Bulk Input Parser:
-     * Mendukung pemisah Tab (\t), Koma (,), atau Titik Koma (;)
+     * Bulk Input Excel Parser
      */
     function parseBulkInput() {
       const textarea = document.getElementById('bulkTextInput');
@@ -850,7 +844,6 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
         } else if (trimmedLine.includes(',')) {
           parts = trimmedLine.split(',');
         } else {
-          // Fallback coba split spasi terakhir untuk nomor hp
           const lastSpaceIndex = trimmedLine.lastIndexOf(' ');
           if (lastSpaceIndex > -1) {
             parts = [
@@ -866,14 +859,13 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
           const formattedPhone = cleanPhoneNumber(rawPhone);
 
           if (rawName) {
-            // Hindari duplikasi nomor yang persis sama jika sudah ada
             const existingIndex = guests.findIndex(g => g.phone === formattedPhone && g.name === rawName);
             if (existingIndex === -1) {
               guests.push({
                 id: 'g_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
                 name: rawName,
                 phone: formattedPhone,
-                status: 'pending' // 'pending' | 'sent'
+                status: 'pending'
               });
               countSuccess++;
             }
@@ -891,9 +883,6 @@ Wassalamu’alaikum Warahmatullahi Wabarakatuh
       }
     }
 
-    /**
-     * Memuat data contoh untuk uji coba instan
-     */
     function loadSampleData() {
       const sampleText = 
 `Budi Santoso\t0812-3456-7890
@@ -906,9 +895,6 @@ Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
       showToast('Data contoh telah dimuat ke kotak input!');
     }
 
-    /**
-     * Persistence LocalStorage
-     */
     function saveGuests() {
       localStorage.setItem(STORAGE_KEY_GUESTS, JSON.stringify(guests));
       updateStats();
@@ -936,9 +922,6 @@ Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
       }
     }
 
-    /**
-     * Update Statistik Summary
-     */
     function updateStats() {
       const total = guests.length;
       const sent = guests.filter(g => g.status === 'sent').length;
@@ -949,9 +932,6 @@ Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
       document.getElementById('statSent').textContent = sent;
     }
 
-    /**
-     * Filter & Search
-     */
     function setFilter(filterType, element) {
       currentFilter = filterType;
       document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -963,9 +943,6 @@ Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
       renderTable();
     }
 
-    /**
-     * Render Tabel Tamu
-     */
     function renderTable() {
       const tbody = document.getElementById('guestTableBody');
       const emptyState = document.getElementById('emptyState');
@@ -975,7 +952,6 @@ Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
 
       tbody.innerHTML = '';
 
-      // Filter Data
       let filtered = guests.filter(guest => {
         if (currentFilter === 'pending' && guest.status !== 'pending') return false;
         if (currentFilter === 'sent' && guest.status !== 'sent') return false;
@@ -997,11 +973,9 @@ Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
       }
 
       filtered.forEach((guest, index) => {
-        // Generate Link Undangan Spesifik: base_url/?to=Nama+Tamu
         const encodedName = encodeURIComponent(guest.name).replace(/%20/g, '+');
         const guestLink = `${baseUrl}?to=${encodedName}`;
 
-        // Generate Teks Pesan WhatsApp
         const waMessage = template
           .replace(/{nama}/g, guest.name)
           .replace(/{link}/g, guestLink);
@@ -1015,12 +989,14 @@ Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
             <strong>${escapeHtml(guest.name)}</strong>
           </td>
           <td>
-            <span style="font-family: monospace;">${guest.phone ? '+' + guest.phone : '<span style="color:#E53935;">(No HP Kosong)</span>'}</span>
+            <span style="font-family: monospace;">${guest.phone ? '+' + guest.phone : '<span style="color:#D32F2F;">(No HP Kosong)</span>'}</span>
           </td>
           <td>
             <div style="display: flex; align-items: center; gap: 6px;">
               <span class="guest-link-cell" title="${guestLink}">${guestLink}</span>
-              <button type="button" class="btn-sm-copy" onclick="copyText('${guestLink}')" title="Salin Link Undangan">Salin</button>
+              <button type="button" class="btn-sm-copy" onclick="copyText('${guestLink}')" title="Salin Link">
+                <i class="fa-regular fa-copy"></i>
+              </button>
             </div>
           </td>
           <td style="text-align: center;">
@@ -1037,15 +1013,16 @@ Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
                 onclick="markAsSent('${guest.id}')"
                 style="${!guest.phone ? 'opacity:0.5; pointer-events:none;' : ''}"
               >
-                ${guest.status === 'sent' ? 'Kirim Ulang' : 'Kirim WA'}
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>${guest.status === 'sent' ? 'Kirim Ulang' : 'Kirim WA'}</span>
               </a>
               <button 
                 type="button" 
                 onclick="deleteGuest('${guest.id}')" 
                 title="Hapus tamu"
-                style="background:none; border:none; cursor:pointer; color:#999; padding:4px;"
+                style="background:none; border:none; cursor:pointer; color:#888; padding:4px;"
               >
-                ✕
+                <i class="fa-solid fa-xmark"></i>
               </button>
             </div>
           </td>
@@ -1054,24 +1031,17 @@ Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
       });
     }
 
-    /**
-     * Tandai Status sebagai 'Terkirim' saat tombol Kirim WA diklik
-     */
     function markAsSent(guestId) {
       const target = guests.find(g => g.id === guestId);
       if (target) {
         target.status = 'sent';
         saveGuests();
-        // Beri sedikit jeda agar tab WA terbuka sebelum render ulang badge
         setTimeout(() => {
           renderTable();
         }, 500);
       }
     }
 
-    /**
-     * Hapus 1 Tamu
-     */
     function deleteGuest(guestId) {
       guests = guests.filter(g => g.id !== guestId);
       saveGuests();
@@ -1079,9 +1049,6 @@ Bpk. H. Firmansyah & Ibu\t62813-8899-0011`;
       showToast('Tamu dihapus dari antrean.');
     }
 
-    /**
-     * Salin Teks Bebas ke Clipboard
-     */
     function copyText(text) {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {

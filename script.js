@@ -1,40 +1,40 @@
 /**
  * ==========================================================================
  * THE WEDDING OF DERA & RIFQI
- * Main JavaScript Functionality (script.js)
+ * Main JavaScript Interactivity (script.js)
  * ==========================================================================
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Inisialisasi Nama Tamu Dinamis dari Query String (?to=...)
-  initGuestName();
+  // 1. Membaca Parameter URL Nama Tamu (?to=...)
+  setupGuestName();
 
-  // 2. Inisialisasi Cover Overlay & Audio Controller
-  initCoverAndAudio();
+  // 2. Kontrol Cover Lock Overlay & Background Audio
+  setupCoverAndAudio();
 
-  // 3. Inisialisasi Countdown Timer Hari-H
-  initCountdownTimer();
+  // 3. Countdown Timer Real-time Menuju Hari-H
+  setupCountdownTimer();
 
-  // 4. Inisialisasi Animasi Scroll Reveal
-  initScrollAnimations();
+  // 4. Animasi Scroll Reveal
+  setupScrollReveal();
 });
 
 /**
- * Membaca URL Query Parameter dan menampilkan nama tamu
- * Format URL yang didukung: ?to=Nama+Tamu atau ?u=Nama+Tamu atau ?guest=Nama+Tamu
+ * Membaca URL Query Parameter (?to=... atau ?u=... atau ?guest=...)
+ * Fallback: "Tamu Undangan"
  */
-function initGuestName() {
+function setupGuestName() {
   const urlParams = new URLSearchParams(window.location.search);
   const rawGuest = urlParams.get('to') || urlParams.get('u') || urlParams.get('guest');
-  const guestElement = document.getElementById('guestNameCover');
+  const guestDisplay = document.getElementById('guestNameDisplay');
 
-  if (guestElement) {
+  if (guestDisplay) {
     if (rawGuest && rawGuest.trim() !== '') {
-      // Decode URI Component dan bersihkan dari karakter berbahaya (Anti-XSS)
-      const cleanGuest = escapeHtml(decodeURIComponent(rawGuest.replace(/\+/g, ' ').trim()));
-      guestElement.textContent = cleanGuest;
+      // Decode URL, ganti tanda plus dengan spasi, sanitasi XSS
+      const cleanGuest = sanitizeHtml(decodeURIComponent(rawGuest.replace(/\+/g, ' ').trim()));
+      guestDisplay.textContent = cleanGuest;
     } else {
-      guestElement.textContent = 'Tamu Undangan';
+      guestDisplay.textContent = 'Tamu Undangan';
     }
   }
 }
@@ -42,109 +42,92 @@ function initGuestName() {
 /**
  * Sanitasi string sederhana untuk mencegah injection HTML
  */
-function escapeHtml(text) {
-  const map = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  };
-  return text.replace(/[&<>"']/g, (m) => map[m]);
+function sanitizeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
 }
 
 /**
- * Mengontrol Cover Overlay saat dibuka dan pemutaran background music
+ * Kontrol Cover Lock Modal dan Pemutaran Background Music
  */
-function initCoverAndAudio() {
+function setupCoverAndAudio() {
   const coverOverlay = document.getElementById('coverOverlay');
-  const btnOpenInvitation = document.getElementById('btnOpenInvitation');
-  const audio = document.getElementById('weddingAudio');
-  const musicToggleBtn = document.getElementById('musicToggleBtn');
-  const musicIconPlay = document.getElementById('musicIconPlay');
-  const musicIconPause = document.getElementById('musicIconPause');
+  const btnOpenInvite = document.getElementById('btnOpenInvite');
+  const audio = document.getElementById('bg-audio');
+  const floatingMusicBtn = document.getElementById('floatingMusicBtn');
 
-  let isPlaying = false;
-
-  // Handler saat tombol "Buka Undangan" diklik
-  if (btnOpenInvitation && coverOverlay) {
-    btnOpenInvitation.addEventListener('click', () => {
-      // 1. Hilangkan cover overlay ke atas
+  // Klik tombol "Buka Undangan"
+  if (btnOpenInvite && coverOverlay) {
+    btnOpenInvite.addEventListener('click', () => {
+      // 1. Geser cover ke atas secara mulus (translateY(-100%))
       coverOverlay.classList.add('hide');
 
-      // 2. Buka kunci scroll body
+      // 2. Buka kunci scroll halaman
       document.body.classList.remove('locked');
 
-      // 3. Putar audio otomatis (Play on user gesture)
+      // 3. Putar audio otomatis (User gesture autoplay)
       if (audio) {
         audio.play().then(() => {
-          isPlaying = true;
           updateMusicUI(true);
         }).catch((err) => {
-          console.warn('Autoplay audio dicegah oleh peramban:', err);
-          isPlaying = false;
+          console.warn('Autoplay dicegah oleh browser:', err);
           updateMusicUI(false);
         });
       }
     });
   }
 
-  // Handler untuk Floating Music Button
-  if (musicToggleBtn && audio) {
-    musicToggleBtn.addEventListener('click', () => {
+  // Floating Button Toggle Musik
+  if (floatingMusicBtn && audio) {
+    floatingMusicBtn.addEventListener('click', () => {
       if (audio.paused) {
         audio.play().then(() => {
-          isPlaying = true;
           updateMusicUI(true);
         }).catch((err) => {
           console.warn('Gagal memutar audio:', err);
         });
       } else {
         audio.pause();
-        isPlaying = false;
         updateMusicUI(false);
       }
     });
   }
 
-  function updateMusicUI(active) {
-    if (!musicToggleBtn) return;
-    if (active) {
-      musicToggleBtn.classList.add('playing');
-      musicToggleBtn.setAttribute('title', 'Jeda Musik');
-      if (musicIconPlay) musicIconPlay.style.display = 'none';
-      if (musicIconPause) musicIconPause.style.display = 'block';
+  function updateMusicUI(isPlaying) {
+    if (!floatingMusicBtn) return;
+    if (isPlaying) {
+      floatingMusicBtn.classList.add('playing');
+      floatingMusicBtn.setAttribute('title', 'Jeda Musik');
     } else {
-      musicToggleBtn.classList.remove('playing');
-      musicToggleBtn.setAttribute('title', 'Putar Musik');
-      if (musicIconPlay) musicIconPlay.style.display = 'block';
-      if (musicIconPause) musicIconPause.style.display = 'none';
+      floatingMusicBtn.classList.remove('playing');
+      floatingMusicBtn.setAttribute('title', 'Putar Musik');
     }
   }
 }
 
 /**
- * Countdown Timer Real-time menuju Hari-H
- * Target: Rabu, 07 Oktober 2026 pukul 08:00 WIB (UTC+7)
+ * Hitung Mundur Real-time menuju Hari-H
+ * Target: Rabu, 07 Oktober 2026 pukul 08.00 WIB (UTC+7)
  */
-function initCountdownTimer() {
-  const cdDays = document.getElementById('cdDays');
-  const cdHours = document.getElementById('cdHours');
-  const cdMinutes = document.getElementById('cdMinutes');
-  const cdSeconds = document.getElementById('cdSeconds');
+function setupCountdownTimer() {
+  const timerDays = document.getElementById('timerDays');
+  const timerHours = document.getElementById('timerHours');
+  const timerMinutes = document.getElementById('timerMinutes');
+  const timerSeconds = document.getElementById('timerSeconds');
 
-  // Waktu target: 07 Oktober 2026, 08:00:00 WIB (+07:00)
+  // Waktu target: 07 Oktober 2026 08:00:00 WIB (+07:00)
   const targetDate = new Date('2026-10-07T08:00:00+07:00').getTime();
 
-  function updateCountdown() {
+  function updateTimer() {
     const now = new Date().getTime();
     const distance = targetDate - now;
 
     if (distance <= 0) {
-      if (cdDays) cdDays.textContent = '00';
-      if (cdHours) cdHours.textContent = '00';
-      if (cdMinutes) cdMinutes.textContent = '00';
-      if (cdSeconds) cdSeconds.textContent = '00';
+      if (timerDays) timerDays.textContent = '00';
+      if (timerHours) timerHours.textContent = '00';
+      if (timerMinutes) timerMinutes.textContent = '00';
+      if (timerSeconds) timerSeconds.textContent = '00';
       return;
     }
 
@@ -153,62 +136,55 @@ function initCountdownTimer() {
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    if (cdDays) cdDays.textContent = String(days).padStart(2, '0');
-    if (cdHours) cdHours.textContent = String(hours).padStart(2, '0');
-    if (cdMinutes) cdMinutes.textContent = String(minutes).padStart(2, '0');
-    if (cdSeconds) cdSeconds.textContent = String(seconds).padStart(2, '0');
+    if (timerDays) timerDays.textContent = String(days).padStart(2, '0');
+    if (timerHours) timerHours.textContent = String(hours).padStart(2, '0');
+    if (timerMinutes) timerMinutes.textContent = String(minutes).padStart(2, '0');
+    if (timerSeconds) timerSeconds.textContent = String(seconds).padStart(2, '0');
   }
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  updateTimer();
+  setInterval(updateTimer, 1000);
 }
 
 /**
- * Fungsi Copy to Clipboard untuk Tanda Kasih (Nomor DANA)
- * @param {string} text - Teks yang akan disalin (nomor rekening/DANA)
- * @param {string} buttonId - ID elemen tombol
+ * Fitur Salin Rekening / Nomor DANA dengan Feedback Visual 2 Detik
+ * @param {string} text - Nomor DANA
+ * @param {string} btnId - ID tombol yang diklik
  * @param {string} defaultText - Teks asli tombol
  */
-function copyToClipboard(text, buttonId, defaultText) {
-  const btn = document.getElementById(buttonId);
-  
+function copyDanaNumber(text, btnId, defaultText) {
+  const btn = document.getElementById(btnId);
+
   const onSuccess = () => {
     if (btn) {
       btn.classList.add('copied');
-      btn.innerHTML = `
-        <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-        <span>Tersalin!</span>
-      `;
+      btn.innerHTML = `<i class="fa-solid fa-check"></i> <span>Tersalin!</span>`;
     }
 
-    // Tampilkan Toast
     showToast(`Nomor DANA (${text}) berhasil disalin!`);
 
-    // Reset tombol setelah 2 detik
+    // Reset teks tombol setelah 2 detik
     setTimeout(() => {
       if (btn) {
         btn.classList.remove('copied');
-        btn.innerHTML = `
-          <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:currentColor;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-          <span>${defaultText}</span>
-        `;
+        btn.innerHTML = `<i class="fa-regular fa-copy"></i> <span>${defaultText}</span>`;
       }
     }, 2000);
   };
 
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
-      fallbackCopyText(text, onSuccess);
+      fallbackCopy(text, onSuccess);
     });
   } else {
-    fallbackCopyText(text, onSuccess);
+    fallbackCopy(text, onSuccess);
   }
 }
 
 /**
  * Fallback salin teks untuk peramban yang membatasi clipboard API
  */
-function fallbackCopyText(text, callback) {
+function fallbackCopy(text, callback) {
   const textArea = document.createElement('textarea');
   textArea.value = text;
   textArea.style.position = 'fixed';
@@ -218,22 +194,22 @@ function fallbackCopyText(text, callback) {
   textArea.focus();
   textArea.select();
   try {
-    const successful = document.execCommand('copy');
-    if (successful && typeof callback === 'function') {
+    const success = document.execCommand('copy');
+    if (success && typeof callback === 'function') {
       callback();
     }
   } catch (err) {
-    console.error('Fallback copy gagal:', err);
+    console.error('Fallback copy error:', err);
   }
   document.body.removeChild(textArea);
 }
 
 /**
- * Menampilkan Toast Notification
+ * Menampilkan Toast Notifikasi
  */
 function showToast(message) {
-  const toast = document.getElementById('toastMsg');
-  const toastText = document.getElementById('toastText');
+  const toast = document.getElementById('toastNotice');
+  const toastText = document.getElementById('toastNoticeText');
   if (toast && toastText) {
     toastText.textContent = message;
     toast.classList.add('show');
@@ -244,17 +220,16 @@ function showToast(message) {
 }
 
 /**
- * Inisialisasi Intersection Observer untuk Scroll Reveal Elemen
+ * Animasi Scroll Reveal saat elemen masuk ke dalam viewport
  */
-function initScrollAnimations() {
-  const revealElements = document.querySelectorAll('.reveal-on-scroll');
+function setupScrollReveal() {
+  const items = document.querySelectorAll('.reveal-item');
 
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
-          // Unobserve setelah tampil pertama kali
           observer.unobserve(entry.target);
         }
       });
@@ -263,9 +238,9 @@ function initScrollAnimations() {
       rootMargin: '0px 0px -40px 0px'
     });
 
-    revealElements.forEach((el) => observer.observe(el));
+    items.forEach((item) => observer.observe(item));
   } else {
-    // Fallback jika browser lawas tidak mendukung IntersectionObserver
-    revealElements.forEach((el) => el.classList.add('active'));
+    // Fallback jika browser lawas
+    items.forEach((item) => item.classList.add('active'));
   }
 }
