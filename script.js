@@ -107,9 +107,25 @@ function setupCoverAndAudio() {
     }, 1200);
   }
 
+  // 0. Pre-arm audio pada interaksi mikro pertama pengguna di cover
+  const earlyArmAudio = () => {
+    if (audio && audio.paused) {
+      // Pemicu gesture awal yang diakui browser
+      audio.load();
+    }
+    ['touchstart', 'pointerdown', 'mousedown', 'keydown'].forEach(evt => {
+      window.removeEventListener(evt, earlyArmAudio);
+    });
+  };
+  ['touchstart', 'pointerdown', 'mousedown', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, earlyArmAudio, { passive: true, once: true });
+  });
+
   // Fungsi pemutar musik dengan penanganan pembatasan browser
   function playWeddingMusic() {
     if (!audio) return;
+
+    // 1. Coba putar dengan suara penuh
     audio.muted = false;
     const playPromise = audio.play();
 
@@ -117,25 +133,36 @@ function setupCoverAndAudio() {
       playPromise.then(() => {
         updateMusicUI(true);
       }).catch((err) => {
-        console.warn('Autoplay dicegah oleh peramban sebelum interaksi pengguna:', err);
-        updateMusicUI(false);
-        // Aktifkan musik seketika pada sentuhan/scroll/klik pertama tamu
+        console.warn('Browser membatasi autoplay tanpa sentuhan fisik awal:', err);
+        
+        // 2. Putar secara muted agar audio pipeline aktif berjalan
+        audio.muted = true;
+        audio.play().then(() => {
+          updateMusicUI(false);
+        }).catch(() => {});
+
+        // 3. Un-mute seketika pada sentuhan/scroll/tap pertama tamu
         attachFirstGestureAudioUnlock();
       });
     }
   }
 
-  // Listener agresif: begitu tamu menyentuh layar, scroll, atau tap di mana saja, musik LANGSUNG berputar
+  // Listener agresif: begitu tamu menyentuh layar, scroll, atau tap di mana saja, musik LANGSUNG UN-MUTE & BERPUTAR
   function attachFirstGestureAudioUnlock() {
     const gestureEvents = ['touchstart', 'touchend', 'click', 'pointerdown', 'scroll', 'wheel', 'keydown'];
 
     const unlockHandler = () => {
-      if (audio && audio.paused) {
-        audio.play().then(() => {
+      if (audio) {
+        audio.muted = false;
+        if (audio.paused) {
+          audio.play().then(() => {
+            updateMusicUI(true);
+          }).catch(() => {});
+        } else {
           updateMusicUI(true);
-        }).catch(() => {});
+        }
       }
-      // Lepas semua listener setelah musik berhasil di-trigger
+      // Lepas semua listener setelah musik berhasil aktif
       gestureEvents.forEach((evt) => {
         window.removeEventListener(evt, unlockHandler);
         document.removeEventListener(evt, unlockHandler);
